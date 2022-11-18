@@ -10,4 +10,10 @@ app.listen(process.env.PORT || port, () => {
 
 app.get('/', (req, res) => {
   res.send('Hello');
-})
+});
+
+app.get('/invite', (req, res) => {
+  res.json({
+    id: 5
+  })
+});
