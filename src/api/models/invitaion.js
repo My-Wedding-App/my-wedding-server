@@ -1,12 +1,14 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
-
+const { mongoose, Schema } = require('mongoose');
 
 // JSON schema for invitation
-const InvitationSchema = new Schema({
+const invitationSchema = new Schema({
   code: {
     type: String,
-    required: 'code is required'
+    required: 'code is required',
+    index: {      
+      unique: true,
+      dropDups: true
+    }
   },
   category: {
     type: String,
@@ -25,4 +27,6 @@ const InvitationSchema = new Schema({
   }
 });
 
-module.exports = mongoose.model('Invitation', InvitationSchema);
+const Invitation = mongoose.model('Invitation', invitationSchema);
+
+module.exports = Invitation;

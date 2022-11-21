@@ -1,5 +1,4 @@
-const mongoose = require('mongoose'),
-Task = mongoose.model('Tasks');
+const Invitation = require('../models/invitaion');
 
 
 /**
@@ -7,15 +6,24 @@ Task = mongoose.model('Tasks');
  * @param {Request} req 
  * @param {Response} res 
  */
-exports.addInvitation = function(req, res) {
-  const newInvitation = new Task(req.body);
-  newInvitation.save(function(err, task) {
-    if (err) {
-      res.status(400).send(err);
-    } else {
-      res.status(201).json(task);
-    }
+const addInvitation = async (req, res) => {
+  const invitation = new Invitation({
+    code: req.body.code,
+    category: req.body.category,
+    title: req.body.title,
+    name: req.body.name
   });
+
+  const result = await invitation.save()
+    .then(() => {
+      return true;
+    })
+    .catch(err => {
+      console.log('Error in adding invitation', err);
+      return false;
+    })
+  
+  return result;
 };
 
 /**
@@ -24,12 +32,12 @@ exports.addInvitation = function(req, res) {
  * @param {Response} res 
  */
 exports.getInvitationById = function(req, res) {
-  Task.findById(req.params.invitationID, function(err, invitation) {
-    if (err) {
-      res.status(404).send({ error: { errors: [ { domain: 'global', reason: 'notFound', message: 'Not Found', 
-                            description: 'Couldn\'t find the requested invitationId \'' + req.params.invitationId + '\'' } ], err, code: 404 } })
-    } else {
-      res.json(invitation);
-    }
-  });
-};
+  console.log(req);
+  res.json({
+    id: 5
+  })
+}
+
+module.exports = {
+  addInvitation
+}
