@@ -1,0 +1,64 @@
+pipeline {
+  agent any
+  tools {
+    nodejs "Node16.14.2"
+  }
+  environment {
+    DOCKER_HUB_TOKEN = credentials('docker-hub-token')
+    FULL_PATH_BRANCH = "${sh(script:'git name-rev --name-only HEAD', returnStdout: true)}"
+    GIT_BRANCH = FULL_PATH_BRANCH.substring(FULL_PATH_BRANCH.lastIndexOf('/') + 1, FULL_PATH_BRANCH.length()).trim()
+  }
+  stages {
+    stage('Checkout Scm') {
+      steps {
+        git(url: 'https://github.com/My-Wedding-App/my-wedding-server.git', branch: "${GIT_BRANCH}")
+      }
+    }
+
+    stage('Login to Docker hub') {
+      steps {
+        sh '''
+        echo "=== Docker Hub login ==="
+        echo $DOCKER_HUB_TOKEN | docker login -u asithalakshan97 --password-stdin
+        echo "=== Docker Hub login Success ==="
+        '''
+      }
+    }
+
+    stage('Build My Wedding Server'){
+      steps {        
+        sh '''echo "=== My Wedding Server Build ==="'''
+        sh '''yarn install'''
+        sh '''yarn build'''
+        sh '''bash docker-build-then-push-image.sh'''
+        sh '''echo "=== My Wedding Server Build Success ==="
+        '''
+      }
+    }
+    
+    stage('Deploy My Wedding Server to dev'){
+      when { expression { env.GIT_BRANCH == 'dev'} }
+      steps {
+        sh '''
+        echo "=== Deploy My Wedding Server Azure Conatiner App (Dev) ==="
+        
+        echo "=== Deploy My Wedding Server Azure Conatiner App (Dev) Success==="
+        '''
+      }
+    }
+
+    stage('Deploy My Wedding Server to production'){
+      when { expression { env.GIT_BRANCH == 'master'} }
+      steps {
+        sh '''
+        echo "=== Deploy My Wedding Server Azure Conatiner App (Production) ==="
+
+        echo "=== Deploy My Wedding Server Azure Conatiner App (Production) Success==="
+        '''
+      }
+    }
+  }
+  options {
+    buildDiscarder(logRotator(daysToKeepStr: '2', numToKeepStr: '2'))
+  }
+}
