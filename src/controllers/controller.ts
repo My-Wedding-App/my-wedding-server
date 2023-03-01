@@ -1,8 +1,8 @@
 import { Request, Response, NextFunction } from "express";
-import { HttpMethod } from "../types/common";
+import { HttpMethodType } from "../types/common";
 
 interface Controller {
-  method(): HttpMethod;
+  method(): HttpMethodType;
   isPrivate(): boolean;
   path(): string;
   handler(
