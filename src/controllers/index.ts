@@ -1,8 +1,11 @@
-import { GetInvitation, CreateInvitation } from "./invitation";
+import { CreateInvitation, GetInvitation } from "./invitation";
+import { CreateGuest,GetGuest } from "./guest";
 
 const controllers: any[] = [
   GetInvitation,
-  CreateInvitation
+  CreateInvitation,
+  CreateGuest,
+  GetGuest
 ];
 
 export default controllers;
