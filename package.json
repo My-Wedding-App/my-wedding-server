@@ -5,8 +5,8 @@
   "main": "src/index.ts",
   "scripts": {
     "build": "yarn tsc",
-    "start:prod": "node dist/index.js",
-    "start": "concurrently \"yarn tsc --watch\" \"nodemon -q dist/index.js\""
+    "start": "node dist/index.js",
+    "start:dev": "concurrently \"yarn tsc --watch\" \"nodemon -q dist/index.js\""
   },
   "repository": {
     "type": "git",
