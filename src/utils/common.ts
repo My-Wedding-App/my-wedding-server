@@ -8,7 +8,7 @@ export enum HttpMethod {
 }
 
 export const successResponse = async (response: any, res: Response) => {
-  const result = response ? [response] : [];
+  const result = response && response.length > 0 ? response : [];
   res.status(200);
   res.send(result);
 }

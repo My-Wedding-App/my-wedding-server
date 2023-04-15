@@ -92,7 +92,7 @@ export const dynamoDBQueryWithParams = async (params: any, fetchAll: any, return
   return items;
 };
 
-export const dynamoDBGetItem = async (tableName: string, partitionKeyName: string, partitionKeyVal: string, sortKeyName = undefined, sortKeyVal = undefined, requiredAttributes: any = undefined,) => {
+export const dynamoDBGetItem = async (tableName: string, partitionKeyName: string, partitionKeyVal: string, sortKeyName?: string, sortKeyVal?: string, requiredAttributes?: any) => {
   let params = {
       TableName: tableName,
       Key: {
@@ -107,7 +107,7 @@ export const dynamoDBGetItem = async (tableName: string, partitionKeyName: strin
   console.log({ params });
 
   const data = await db.get(params).promise();
-  return data.Item;
+  return [data.Item];
 };
 
 export const dynamoDeleteItem = async (tableName: string, partitionKeyName: string, partitionKeyVal: string, sortKeyName = undefined, sortKeyVal = undefined) => {
@@ -124,11 +124,12 @@ export const dynamoDeleteItem = async (tableName: string, partitionKeyName: stri
   return data;
 };
 
-export const dynamoDBScan = async (tableName: string, {
+export const dynamoDBScan = async (tableName: string,
+  expressionAttributeNames?: string,
+  expressionAttributeValues?: string,
+  filterExpression?: string,
+  {  
   requiredAttributes = undefined,
-  expressionAttributeNames = undefined,
-  expressionAttributeValues = undefined,
-  filterExpression = undefined,
   limit = undefined,
   indexName = undefined,
   fetchAll = true
@@ -140,7 +141,7 @@ export const dynamoDBScan = async (tableName: string, {
   };
 
   if (filterExpression) {
-      params.FilterExpression = filterExpression;
+      params.FilterExpression = `${expressionAttributeNames} = ${expressionAttributeValues}`;
   }
 
   if (requiredAttributes) {
@@ -199,3 +200,4 @@ export const dynamoDBUpdateItem = async (tableName: string, partitionKeyName: st
   const data = await db.update(params).promise();
   return data;
 };
+

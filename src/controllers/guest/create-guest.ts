@@ -15,22 +15,25 @@ class CreateGuest implements Controller {
   }
 
   public path = (): string => {
-    return '/guest/:guestId';
+    return '/wedding/:weddingId/guest/:guestId';
   }
 
   public handler = async (req: Request, res: Response): Promise<void> => {
     try {
       const { body, params } = req;
-      const { guestId } = params;
-      const { invitationId, title, name } = body;
+      const { guestId, weddingId } = params;
+      const { invitationId, title, name, contactNo, family } = body;
 
       const tableName = Tables.GUEST_TABLE;
 
       const item = {
+        weddingId: weddingId,
         guestId: guestId,
         invitationId: invitationId,
         title: title,
-        name: name
+        name: name,
+        contactNo: contactNo,
+        family: family
       };
       const response = await dynamoDBPutItem(tableName, item);
       await successResponse(response, res);
