@@ -28,6 +28,10 @@ app.get('/', (req, res) => {
   res.send('Welcome to my wedding server');
 });
 
+app.get('/.well-known/pki-validation/F662C8323347F139DC16C518E0B526D1.txt', (req, res) => {
+  res.sendFile(('/app/F662C8323347F139DC16C518E0B526D1.txt'));
+});
+
 
 app.listen(port, () => {
   console.log(`⚡️[server]: Server is running at http://localhost:${port}`);
