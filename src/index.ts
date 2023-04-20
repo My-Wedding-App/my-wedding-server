@@ -7,8 +7,8 @@ import fs from 'fs';
 import https from 'https';
 import router from './routes';
 
-const cert = fs.readFileSync('../certificate.crt');
-const key = fs.readFileSync('../private.key');
+const cert = fs.readFileSync('/app/certificate.crt');
+const key = fs.readFileSync('/app/private.key');
 
 const config = {
   key,
