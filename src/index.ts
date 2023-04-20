@@ -9,7 +9,7 @@ dotenv.config({
   path: path.join(__dirname, '..', '/.env')
 });
 
-const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 8000;
+const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 80;
 const app: Express = express();
 
 const allowedOrigins = ['http://localhost:3000'];
