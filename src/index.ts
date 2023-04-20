@@ -28,6 +28,7 @@ app.get('/', (req, res) => {
   res.send('Welcome to my wedding server');
 });
 
+
 app.listen(port, () => {
   console.log(`⚡️[server]: Server is running at http://localhost:${port}`);
 });
