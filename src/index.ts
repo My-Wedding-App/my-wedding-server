@@ -3,7 +3,17 @@ import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
 import path from 'path';
 import cors from 'cors';
+import fs from 'fs';
+import https from 'https';
 import router from './routes';
+
+const cert = fs.readFileSync('../certificate.crt');
+const key = fs.readFileSync('../private.key');
+
+const config = {
+  key,
+  cert
+};
 
 dotenv.config({
   path: path.join(__dirname, '..', '/.env')
@@ -36,3 +46,6 @@ app.get('/.well-known/pki-validation/F662C8323347F139DC16C518E0B526D1.txt', (req
 app.listen(port, () => {
   console.log(`⚡️[server]: Server is running at http://localhost:${port}`);
 });
+
+const httpsServer = https.createServer(config, app);
+httpsServer.listen(8443);
