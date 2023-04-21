@@ -38,8 +38,8 @@ app.get('/', (req, res) => {
   res.send('Welcome to my wedding server');
 });
 
-app.get('/.well-known/pki-validation/F662C8323347F139DC16C518E0B526D1.txt', (req, res) => {
-  res.sendFile(('/app/F662C8323347F139DC16C518E0B526D1.txt'));
+app.get('/.well-known/pki-validation/E19CCB7D5885560ECE8114005E3278C2.txt', (req, res) => {
+  res.sendFile(('/app/E19CCB7D5885560ECE8114005E3278C2.txt'));
 });
 
 
