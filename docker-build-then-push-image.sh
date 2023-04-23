@@ -13,9 +13,11 @@ GIT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
 case ${GIT_BRANCH} in
   "master")
     DOCKER_IMAGE_TAG="${DOCKER_REGISTRY_PATH}-production:${GIT_COMMIT_AS_DOCKER_IMAGE_VERSION}"
+    APP_NAME="my-wedding-server-production"
     ;;
   "dev")
     DOCKER_IMAGE_TAG="${DOCKER_REGISTRY_PATH}-dev:${GIT_COMMIT_AS_DOCKER_IMAGE_VERSION}"
+    APP_NAME="my-wedding-server-dev"
     ;;
   *)
     echo "You are building on branch: ${GIT_BRANCH}!" > /dev/stderr
@@ -28,6 +30,7 @@ case ${GIT_BRANCH} in
     echo "OK.  Will build assuming 'dev' settings..."
     # assume dev settings
     DOCKER_IMAGE_TAG="${DOCKER_REGISTRY_PATH}/dev:${GIT_COMMIT_AS_DOCKER_IMAGE_VERSION}"
+    APP_NAME="my-wedding-server-dev"
   ;;
 esac
 
@@ -36,5 +39,9 @@ echo "Build ${DOCKER_IMAGE_TAG} docker image"
 docker build -t "${DOCKER_IMAGE_TAG}" .
 
 # Push docker image to azure container registry
+heroku container:push web
 # echo "Push ${DOCKER_IMAGE_TAG} docker image to azure container registry"
 # docker push "${DOCKER_IMAGE_TAG}"
+
+# release the app 
+heroku container:release web

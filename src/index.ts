@@ -25,7 +25,7 @@ app.use(bodyParser.json());
 app.use(router);
 
 app.get('/', (req, res) => {
-  res.send('Welcome to my wedding server');
+  res.send('Welcome to my wedding server in heroku');
 });
 
 
