@@ -36,5 +36,5 @@ echo "Build ${DOCKER_IMAGE_TAG} docker image"
 docker build -t "${DOCKER_IMAGE_TAG}" .
 
 # Push docker image to azure container registry
-echo "Push ${DOCKER_IMAGE_TAG} docker image to azure container registry"
-docker push "${DOCKER_IMAGE_TAG}"
+# echo "Push ${DOCKER_IMAGE_TAG} docker image to azure container registry"
+# docker push "${DOCKER_IMAGE_TAG}"
