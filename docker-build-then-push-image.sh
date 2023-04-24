@@ -35,13 +35,13 @@ case ${GIT_BRANCH} in
 esac
 
 # Build docker image
-echo "Build ${DOCKER_IMAGE_TAG} docker image"
-docker build -t "${DOCKER_IMAGE_TAG}" .
-
+# echo "Build ${DOCKER_IMAGE_TAG} docker image"
+# docker build -t "${DOCKER_IMAGE_TAG}" .
+heroku container:login
 # Push docker image to azure container registry
-heroku container:push web
+heroku container:push --app ${APP_NAME} web
 # echo "Push ${DOCKER_IMAGE_TAG} docker image to azure container registry"
 # docker push "${DOCKER_IMAGE_TAG}"
 
 # release the app 
-heroku container:release web
+heroku container:release --app ${APP_NAME} web
